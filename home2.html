@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <form class="form-inline" action="" method="post">
+          {{ formx.hidden_tag() }}
+            {{ formx.date(class="form-control mr-sm-3",placeholder="yyyy-mm-dd") }}
+            {{ formx.submit(class="btn btn-primary btn-sm") }}
+        </form>
+    </article>
+    {% for post in posts %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('show', user_id=post.author.id) }}">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.content }}</a></h2>
+            <a href="{{ url_for('post', post_id=post.id) }}"> {{ (post.comments)|length }} comments </a>
+          </div>
+
+        </article>
+    {% endfor %}
+{% endblock content %}
